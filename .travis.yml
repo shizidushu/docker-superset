@@ -7,6 +7,6 @@ jobs:
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - ls -al
-      - docker build -t $DOCKER_USERNAME/docker-superset:$SUPERSET_VERSION --build-arg SUPERSET_VERSION=$SUPERSET_VERSION -f docker-files/Dockerfile .
+      - docker build -t $DOCKER_USERNAME/superset:$SUPERSET_VERSION --build-arg SUPERSET_VERSION=$SUPERSET_VERSION -f docker-files/Dockerfile .
       - docker images
       - docker push $DOCKER_USERNAME/superset:$SUPERSET_VERSION
