@@ -56,8 +56,8 @@ RUN pip install --upgrade setuptools pip
 RUN pip install -r requirements.txt
 RUN pip install -r requirements-dev.txt
 RUN pip install -e .
-RUN pip install pybigquery pyhive
-RUN pip3 install pybigquery pyhive
+RUN pip install pybigquery pyhive pandas==0.23.1
+RUN pip3 install pybigquery pyhive pandas==0.23.1
 
 ENV PATH=${SUPERSET_HOME}/superset/bin:$PATH \
     PYTHONPATH=${SUPERSET_HOME}superset/:${SUPERSET_HOME}config/:$PYTHONPATH
