@@ -43,28 +43,6 @@ is_empty_string () {
    echo $output
 }
 
-# function to initialize apache-superset
-initialize_superset () {
-    USER_COUNT=$(fabmanager list-users --app superset | awk '/email/ {print}' | wc -l)
-    if [ "$?" ==  0 ] && [ $USER_COUNT == 0 ]; then
-        # Create an admin user (you will be prompted to set username, first and last name before setting a password)
-        fabmanager create-admin --app superset --username admin --firstname apache --lastname superset --email apache-superset@fab.com --password admin
-
-        # Initialize the database
-        superset db upgrade
-
-        # Load some data to play with
-        superset load_examples
-
-        # Create default roles and permissions
-        superset init
-
-        echo Initialized Apache-Superset. Happy Superset Exploration!
-    else
-        echo Apache-Superset Already Initialized.
-    fi
-}
-
 # start of the script
 echo Environment Variable: SUPERSET_ENV: $SUPERSET_ENV
 if $(is_empty_string $SUPERSET_ENV); then
@@ -103,9 +81,6 @@ else
      echo Environment Variable Exported: INVOCATION_TYPE: $INVOCATION_TYPE
 fi
 
-# initializing the superset[should only be run for the first time of environment setup.]
-echo Starting Initialization[if needed]
-initialize_superset
 
 echo Container deployment type: $SUPERSET_ENV
 if [ "$SUPERSET_ENV" == "local" ]; then
